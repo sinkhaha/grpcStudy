@@ -11,11 +11,10 @@ const hello_proto = require('./proto_loader');
  * 实际的sayHello方法
  * 
  * @param {*} call
- * @param {*} callback
+ * @param {*} callback 客户端传的回调方法
  */
 function sayHello(call, callback) {
     console.log('客户端请求参数是', call.request);
-    // callback第2个参数为响应的消息
     callback(null, { message: `hello, ${call.request.name}` });
 }
 
