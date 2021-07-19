@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+// 根据具体情况指定
+// option java_multiple_files = true;
+// option java_package = "io.grpc.examples.routeguide"; // java使用时，指定包的路径
+// option java_outer_classname = "RouteGuideProto";
+// option objc_class_prefix = "RTG";
+
+// 包名
+package routeguide;
+
+// 服务
+service RouteGuide {
+  // 获取一个位置
+  rpc GetFeature(Point) returns (Feature) {}
+
+  // 获取位置列表
+  rpc getFeaturesList(Rectangle) returns (stream Feature) {}
+
+  // 入参是一个流
+  rpc RecordRoute(stream Point) returns (RouteSummary) {}
+
+  // 入参和出参都是一个流
+  rpc RouteChat(stream RouteNote) returns (stream RouteNote) {}
+}
+
+// 一个经纬度消息体
+message Point {
+  int32 latitude = 1; // 经度
+  int32 longitude = 2; // 纬度
+}
+
+// 矩阵消息体
+message Rectangle {
+  Point lo = 1;
+  Point hi = 2;
+}
+
+// 一个地点位置消息体
+message Feature {
+  string name = 1;
+  Point location = 2;
+}
+
+// 路线信息消息体
+message RouteNote {
+  // 要记录的位置信息
+  Point location = 1;
+
+  // 要发送的消息
+  string message = 2;
+}
+
+// 路线摘要信息体
+message RouteSummary {
+  int32 point_count = 1;
+
+  int32 feature_count = 2;
+
+  // 距离
+  int32 distance = 3;
+
+  // 遍历的时长
+  int32 elapsed_time = 4;
+}
