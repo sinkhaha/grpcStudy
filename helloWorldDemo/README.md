@@ -1,4 +1,4 @@
-grpc helloWorld demo
+grpc helloworld demo
 ```js
 npm i
 node server.js 
