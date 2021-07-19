@@ -1,0 +1,19 @@
+syntax = 'proto3'; // proto版本，参考https://developers.google.com/protocol-buffers/docs/proto3
+
+package hello; // 包名
+
+// Greeter服务定义
+service Greeter {
+    // 方法
+    rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// 发送消息体
+message HelloRequest {
+    string name = 1;
+}
+
+// 响应消息体
+message HelloReply {
+    string message = 1;
+}
