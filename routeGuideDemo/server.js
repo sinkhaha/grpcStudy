@@ -26,6 +26,7 @@ let route_notes = {};
  * @param {function(Error, feature)} callback 为客户端传的回调方法
  */
 function getFeature(call, callback) {
+    // call.request包含客户端发送的请求
     const featureInfo = getFeatureByPointFromList(call.request);
     callback(null, featureInfo);
 }
@@ -54,12 +55,12 @@ function getFeaturesList(call) {
             feature.location.latitude >= bottom &&
             feature.location.latitude <= top) {
 
-            // 往可写流写入数据    
+            // 往可写流写入数据，发送给客户端   
             call.write(feature);
         }
     });
 
-    // 结束流
+    // 流已完成
     call.end();
 }
 
@@ -77,7 +78,7 @@ function recordRoute(call, callback) {
     // Start a timer
     let start_time = process.hrtime();
 
-    // 可读流，监听数据
+    // 可读流，监听客户端发送的数据
     call.on('data', function (point) {
         point_count += 1;
         if (getFeatureByPointFromList(point).name !== '') {
@@ -91,7 +92,7 @@ function recordRoute(call, callback) {
         previous = point;
     });
 
-    // 可读流中没有数据消费则触发
+    // 可读流中没有数据消费则触发回调，响应客户端
     call.on('end', function () {
         callback(null, {
             point_count: point_count,
