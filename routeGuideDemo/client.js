@@ -66,6 +66,7 @@ function testGetFeaturesList() {
     // 调用getFeaturesList方法
     let call = client.getFeaturesList(rectangle);
 
+    // 因为服务端发送消息流给客户端，所以客户端需要监听流中的数据
     call.on('data', function (feature) {
         console.log(`找到位置信息 name=${feature.name} (${feature.location.latitude / COORD_FACTOR}, ${feature.location.longitude / COORD_FACTOR})`);
     });
