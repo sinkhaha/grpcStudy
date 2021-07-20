@@ -10,8 +10,8 @@ const PROTO_PATH = path.join(__dirname, 'route_guide.proto');
 
 // 加载proto文件
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
-    keepCase: true,
-    longs: String,
+    keepCase: true, // 方法名驼峰转换
+    longs: String, 
     enums: String,
     defaults: true,
     oneofs: true
